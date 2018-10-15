@@ -31,10 +31,15 @@ public class Renderer {
         Graphics g = img.getGraphics();
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, 800, 600);
+        img.getGraphics().drawString("Left click to draw irregular polygon.", 10, img.getHeight() - 65);
+        img.getGraphics().drawString("Right click to set center of regular polygon, again for radius and scroll wheel to set number of sides, click again to draw selected polygon.", 10, img.getHeight() - 50);
+        img.getGraphics().drawString("Press Backspace to clear and start again and escape to exit.", 10, img.getHeight() - 35);
     }
 
     public void drawPixel(int x, int y, int color) {
         // nastavit pixel do img
-        img.setRGB(x, y, color);
+        if (x > 0 && x < img.getWidth() && y > 0 && y < img.getHeight()) {
+            img.setRGB(x, y, color);
+        }
     }
 }

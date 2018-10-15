@@ -23,10 +23,10 @@ public class PixelTest {
     private boolean sideCheck = false;
 
 
-
     public PixelTest() {
         window = new JFrame();
         // bez tohoto nastavení se okno zavře, ale aplikace stále běží na pozadí
+
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setSize(800, 600); // velikost okna
         window.setLocationRelativeTo(null);// vycentrovat okno
@@ -43,9 +43,9 @@ public class PixelTest {
         window.add(canvas); // vložit plátno do okna
         window.setVisible(true); // zobrazit okno
 
-        img.getGraphics().drawString("Left click to draw irregular polygon.", 10, img.getHeight()-65);
-        img.getGraphics().drawString("Right click to set center of regular polygon, again for radius and scroll wheel to set number of sides, click again to draw selected polygon.", 10, img.getHeight()-50);
-        img.getGraphics().drawString("Press Backspace to clear and start again and escape to exit.", 10, img.getHeight()-35);
+        img.getGraphics().drawString("Left click to draw irregular polygon.", 10, img.getHeight() - 65);
+        img.getGraphics().drawString("Right click to set center of regular polygon, again for radius and scroll wheel to set number of sides, click again to draw selected polygon.", 10, img.getHeight() - 50);
+        img.getGraphics().drawString("Press Backspace to clear and start again and escape to exit.", 10, img.getHeight() - 35);
 
         renderer = new Renderer(img, canvas);
         line = new Line(renderer);
@@ -118,12 +118,12 @@ public class PixelTest {
                         x = e.getX();
                         y = e.getY();
                         line.drawLineDDA((int) regPoints.get(0).getX(), (int) regPoints.get(0).getY(), x, y, 0xff0000);//kresli caru ktera ukazuje radius
-                        regPoly.drawRegPoly((int) regPoints.get(0).getX(), (int) regPoints.get(0).getY(), x, y, sides);
+                        regPoly.drawRegPoly((int) regPoints.get(0).getX(), (int) regPoints.get(0).getY(), x, y, sides);//kresli "nahled" n-uhelniku
                         clicks += 1;
                     } else if (clicks == 3) {//nakresli n-uhelnik
                         regPoly.drawRegPoly((int) regPoints.get(0).getX(), (int) regPoints.get(0).getY(), x, y, sides);//nakresli finalni n-uhelnik
                         clicks = 1;//vrati pocitadlo kliku zpet na puvodni hodnotu aby nenastaval index out of bounds
-                        sides = 3;//nastaví hodnotu stran polygonu zpet na 3 aby se neobjevoval posledne vykresleny n-uhelnik
+                        sides = 3;//nastaví pocet stran n-uhelniku zpet na 3 aby se neobjevoval posledne vykresleny
                     }
                 }
             }
@@ -132,16 +132,18 @@ public class PixelTest {
         canvas.addMouseWheelListener(new MouseAdapter() {
             @Override
             public void mouseWheelMoved(MouseWheelEvent e) {
-                if (e.getWheelRotation() < 0 && sideCheck == true && (clicks == 3 || clicks == 2)) { //nastavuje pocet vrcholu n-uhleniku
+                if (e.getWheelRotation() < 0 && sideCheck == true && (clicks == 3 || clicks == 2)) { //nastavuje pocet stran n-uhleniku
                     if (sides >= 3) {
-                        sides++;
+                        sides++;//pridava strany
+
+                        //cisti platno a prekresluje n-uhelnik
                         renderer.clear();
                         line.drawLineDDA((int) regPoints.get(0).getX(), (int) regPoints.get(0).getY(), x, y, 0xff0000);
                         regPoly.drawRegPoly((int) regPoints.get(0).getX(), (int) regPoints.get(0).getY(), x, y, sides);
                     }
                 } else {
                     if (sides > 3) {
-                        sides--;
+                        sides--;//ubira strany
                         renderer.clear();
                         line.drawLineDDA((int) regPoints.get(0).getX(), (int) regPoints.get(0).getY(), x, y, 0xff0000);
                         regPoly.drawRegPoly((int) regPoints.get(0).getX(), (int) regPoints.get(0).getY(), x, y, sides);
@@ -153,7 +155,7 @@ public class PixelTest {
         canvas.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                     System.exit(0);
                 }
             }
