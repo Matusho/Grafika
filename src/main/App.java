@@ -25,24 +25,21 @@ public class App {
 
     public App() {
         window = new JFrame();
-        // bez tohoto nastavení se okno zavře, ale aplikace stále běží na pozadí
-
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        window.setSize(800, 600); // velikost okna
-        window.setLocationRelativeTo(null);// vycentrovat okno
-        window.setTitle("PGRF1 cvičení"); // titulek okna
+        window.setSize(800, 600);
+        window.setLocationRelativeTo(null);
+        window.setVisible(true);
+        window.setTitle("N-uhelníky");
         window.setResizable(false);
         window.requestFocus();
 
-        // inicializace image, nastavení rozměrů (nastavení typu - pro nás nedůležité)
         img = new BufferedImage(800, 600, BufferedImage.TYPE_INT_RGB);
 
-        // inicializace plátna, do kterého budeme kreslit img
-        canvas = new Canvas();
+        canvas = new Canvas();// inicializace plátna, do kterého se kreslí img
 
         window.add(canvas); // vložit plátno do okna
-        window.setVisible(true); // zobrazit okno
 
+        //komentare k obsluze
         img.getGraphics().drawString("Left click to draw irregular polygon.", 10, img.getHeight() - 65);
         img.getGraphics().drawString("Right click to set center of regular polygon, again for radius and scroll wheel to set number of sides, click again to draw selected polygon.", 10, img.getHeight() - 50);
         img.getGraphics().drawString("Press Backspace to clear and start again and escape to exit.", 10, img.getHeight() - 35);
