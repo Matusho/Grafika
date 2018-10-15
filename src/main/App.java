@@ -57,11 +57,11 @@ public class App {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-                    renderer.clear();//vycisti platno
-                    points.clear();//vycisti List pro nepravidelny polygon
-                    regPoints.clear();//vycisti list pro pravidelny
+                    renderer.clear();
+                    points.clear();
+                    regPoints.clear();
                     clicks = 1;//vrati pocitadlo kliku zpet na puvodni hodnotu aby nenastaval index out of bounds
-                    sides = 3;//pro jistotu
+                    sides = 3;
                 }
             }
         });
@@ -74,7 +74,7 @@ public class App {
                     polygon.drawPolygon(points);//nakresli n-uhlenik
                     regPoints.clear();
                     clicks = 1;//vrati pocitadlo kliku zpet na puvodni hodnotu aby nenastaval index out of bounds
-                    sides = 3;//pro jistotu
+                    sides = 3;
                 }
             }
         });
@@ -85,8 +85,9 @@ public class App {
                 if (SwingUtilities.isLeftMouseButton(e)) {
                     if (points.size() > 0) {
                         polygon.drawPolygon(points);//kresli n-uhelnik aby nezmizel pri kresleni pomocne cary
-                        line.drawLineDDA((int) points.get(points.size() - 1).getX(), (int) points.get(points.size() - 1).getY(), e.getX(), e.getY(), 0x00bfff);//napovedna cara
-                        line.drawLineDDA((int) points.get(0).getX(), (int) points.get(0).getY(), e.getX(), e.getY(), 0x00bfff);//napovedna cara 2
+                        //nahledova cara
+                        line.drawLineDDA((int) points.get(points.size() - 1).getX(), (int) points.get(points.size() - 1).getY(), e.getX(), e.getY(), 0x00bfff);
+                        line.drawLineDDA((int) points.get(0).getX(), (int) points.get(0).getY(), e.getX(), e.getY(), 0x00bfff);
                     }
                 }
             }
@@ -98,7 +99,7 @@ public class App {
                     y = e.getY();
                     renderer.clear();
                     line.drawLineDDA((int) regPoints.get(0).getX(), (int) regPoints.get(0).getY(), x, y, 0xff0000);//kresli caru ktera ukazuje radius
-                    regPoly.drawRegPoly((int) regPoints.get(0).getX(), (int) regPoints.get(0).getY(), x, y, sides);//kresli trojuhelnik kdyz se nastavuje radius
+                    regPoly.drawRegPoly((int) regPoints.get(0).getX(), (int) regPoints.get(0).getY(), x, y, sides);//nahled n-uhelniku kdyz se nastavuje radius
                 }
             }
         });
@@ -108,13 +109,13 @@ public class App {
             public void mouseClicked(MouseEvent e) {
                 if (SwingUtilities.isRightMouseButton(e)) {
                     renderer.clear();
-                    if (clicks == 1) {//prvni kliknuti nastavi stred
+                    if (clicks == 1) {//nastavi stred
                         x = e.getX();
                         y = e.getY();
                         regPoints.add(new Point(x, y));
                         clicks += 1;
                         sideCheck = true;
-                    } else if (clicks == 2) {//druhe kliknuti nastavi radius
+                    } else if (clicks == 2) {//nastavi radius
                         x = e.getX();
                         y = e.getY();
                         line.drawLineDDA((int) regPoints.get(0).getX(), (int) regPoints.get(0).getY(), x, y, 0xff0000);//kresli caru ktera ukazuje radius
@@ -132,10 +133,9 @@ public class App {
         canvas.addMouseWheelListener(new MouseAdapter() {
             @Override
             public void mouseWheelMoved(MouseWheelEvent e) {
-                if (e.getWheelRotation() < 0 && sideCheck == true && (clicks == 3 || clicks == 2)) { //nastavuje pocet stran n-uhleniku
+                if (e.getWheelRotation() < 0 && sideCheck == true && clicks == 3) { //nastavuje pocet stran n-uhleniku
                     if (sides >= 3) {
                         sides++;//pridava strany
-
                         //cisti platno a prekresluje n-uhelnik
                         renderer.clear();
                         line.drawLineDDA((int) regPoints.get(0).getX(), (int) regPoints.get(0).getY(), x, y, 0xff0000);
@@ -160,10 +160,7 @@ public class App {
                 }
             }
         });
-
-
     }
-
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(App::new);
