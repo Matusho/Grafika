@@ -3,7 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/Grafika</output-path>
     <root id="root">
       <element id="archive" name="Grafika.jar">
-        <element id="module-output" name="Grafika" />
+        <element id="module-output" name="c01_haas_matyas" />
         <element id="directory" name="META-INF">
           <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
         </element>

@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PixelTest {
+public class App {
     private JFrame window;
     private BufferedImage img; // objekt pro zápis pixelů
     private Canvas canvas; // plátno pro vykreslení BufferedImage
@@ -23,7 +23,7 @@ public class PixelTest {
     private boolean sideCheck = false;
 
 
-    public PixelTest() {
+    public App() {
         window = new JFrame();
         // bez tohoto nastavení se okno zavře, ale aplikace stále běží na pozadí
 
@@ -166,7 +166,7 @@ public class PixelTest {
 
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(PixelTest::new);
+        SwingUtilities.invokeLater(App::new);
     }
 }
 

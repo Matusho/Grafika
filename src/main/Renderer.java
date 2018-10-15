@@ -37,7 +37,7 @@ public class Renderer {
     }
 
     public void drawPixel(int x, int y, int color) {
-        // nastavit pixel do img
+        // nastavit pixel do img pokud nepresahuje rozmery okna
         if (x > 0 && x < img.getWidth() && y > 0 && y < img.getHeight()) {
             img.setRGB(x, y, color);
         }
